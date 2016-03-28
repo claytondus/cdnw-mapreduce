@@ -21,13 +21,12 @@ for line in sys.stdin:
         last_word = word
 
     if word == last_word:
-        found_at += '"' + doc_title + '": "' + line_num + '",'
+        found_at += '["' + doc_title + '", "' + line_num + '"],'
     else:
         print('"' + last_word + '": ' + "[" + found_at[:-1] + "],")
         last_word = word
-        found_at = '"' + doc_title + '": "' + line_num + '",'
+        found_at = '["' + doc_title + '", "' + line_num + '"],'
 
 print('"' + word + '": ' + "[" + found_at[:-1] + "]")
 
 print("}")
-

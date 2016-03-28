@@ -31,7 +31,7 @@ for line in sys.stdin:
     if(line!=""):
         if(skip_block != True and finished != True):
             if(line[:len(skip_block_start)]==skip_block_start):
-                skip_block = True            
+                skip_block = True
             elif(line[:len(input_end)]==input_end):
                 finished = True
             else:
@@ -43,14 +43,14 @@ for line in sys.stdin:
                     for word in unpacked:
                         word = word.strip()
                         if word != "" and word not in stop_words:
-                            result = [word, title + tuple_delimiter + str(line_count) + " (" + str(real_line) + ")"]
+                            result = [word, title + tuple_delimiter + str(line_count) + '","' + str(real_line) ]
                             print("\t".join(result))
                     cleaned = re.sub('[\W_]+',' ',title.lower()).strip()
                     unpacked = cleaned.split(" ")
                     for word in unpacked:
                         word = word.strip()
                         if word != "" and word not in stop_words:
-                            result = [word, title + tuple_delimiter + str(line_count) + " (" + str(real_line) + ")"]
+                            result = [word, title + tuple_delimiter + str(line_count) + '","' + str(real_line) ]
                             print("\t".join(result))
                     line_count = 5
                 else:
@@ -61,14 +61,12 @@ for line in sys.stdin:
                         for word in unpacked:
                             word = word.strip()
                             if word != "" and word not in stop_words:
-                                result = [word, title + tuple_delimiter + str(line_count) + " (" + str(real_line) + ")"]
+                                result = [word, title + tuple_delimiter + str(line_count) + '","' + str(real_line) ]
                                 print("\t".join(result))
-                    
-                last_line2 = last_line        
+
+                last_line2 = last_line
                 last_line = line
-                
-                
+
+
         elif(line[-(len(skip_block_end)):]==skip_block_end):
             skip_block = False
-        
-
