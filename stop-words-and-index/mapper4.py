@@ -2,7 +2,7 @@
 import sys, re, string, json
 
 jstop = None
-with open("stop-words.txt","r") as f:
+with open("stop-words.json","r") as f:
     jstop = json.load(f)
 stop_words = set(jstop)
 
