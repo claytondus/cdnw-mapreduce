@@ -8,6 +8,4 @@ hadoop jar /usr/prog/hadoop-2.7.2/share/hadoop/tools/lib/hadoop-streaming-2.7.2.
 
 hadoop jar /usr/prog/hadoop-2.7.2/share/hadoop/tools/lib/hadoop-streaming-2.7.2.jar -files mapper3.py,reducer3.py -mapper mapper3.py -reducer reducer3.py -input pa2/doc_counts/ -output pa2/stop_words
 
-hadoop fs -get pa2/stop_words/part-00000 ./stop-words.txt
-
- 
+hadoop fs -get pa2/stop_words/part-00000 ./stop-words.json

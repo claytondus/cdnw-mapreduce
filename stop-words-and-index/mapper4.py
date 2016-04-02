@@ -1,6 +1,18 @@
 #!/usr/bin/env python
 import sys, re, string, json
 
+
+def add_line_to_index(this_line):
+    #strip punctuation
+    cleaned = re.sub('[\W_]+',' ',this_line.lower()).strip()
+    for match in re.finditer(r'\S+', cleaned):
+        position, word = match.start(), match.group()
+        word = word.strip()
+        if word != "" and word not in stop_words:
+            result = [word, title + tuple_delimiter + str(line_count) + '","' + str(real_line) + '","' + str(position) ]
+            print("\t".join(result))
+
+
 jstop = None
 with open("stop-words.json","r") as f:
     jstop = json.load(f)
@@ -38,31 +50,12 @@ for line in sys.stdin:
                 if(line[:len(doc_start)]==doc_start):
                     title = last_line
                     year = last_line2
-                    cleaned = re.sub('[\W_]+',' ',year.lower()).strip()
-                    unpacked = cleaned.split(" ")
-                    for word in unpacked:
-                        word = word.strip()
-                        if word != "" and word not in stop_words:
-                            result = [word, title + tuple_delimiter + str(line_count) + '","' + str(real_line) ]
-                            print("\t".join(result))
-                    cleaned = re.sub('[\W_]+',' ',title.lower()).strip()
-                    unpacked = cleaned.split(" ")
-                    for word in unpacked:
-                        word = word.strip()
-                        if word != "" and word not in stop_words:
-                            result = [word, title + tuple_delimiter + str(line_count) + '","' + str(real_line) ]
-                            print("\t".join(result))
+                    add_line_to_index(year)
+                    add_line_to_index(title)
                     line_count = 5
                 else:
                     if(title!=""):
-                        # strip punctuation
-                        cleaned = re.sub('[\W_]+',' ',line.lower()).strip()
-                        unpacked = cleaned.split(" ")
-                        for word in unpacked:
-                            word = word.strip()
-                            if word != "" and word not in stop_words:
-                                result = [word, title + tuple_delimiter + str(line_count) + '","' + str(real_line) ]
-                                print("\t".join(result))
+                        add_line_to_index(line)
 
                 last_line2 = last_line
                 last_line = line

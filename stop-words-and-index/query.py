@@ -15,9 +15,9 @@ def doQuery():
     for word in sys.argv[1:]:
         if not word in inverted_index:
             continue
-        #Sort entries by title, then line number
-        for entry in sorted(inverted_index[word],key=lambda x: (x[0],int(x[1]))):
-            print(word + ': ' + entry[0] + ' line ' + entry[1])
+        #Sort entries by title, then line number, then position
+        for entry in sorted(inverted_index[word],key=lambda x: (x[0], int(x[1]), int(x[3]))):
+            print(word + ': ' + entry[0] + ' line ' + entry[1] + ' position ' + entry[3])
 
 
 
