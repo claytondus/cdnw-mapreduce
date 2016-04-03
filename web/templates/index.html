@@ -17,12 +17,21 @@
   </form>
 
   <br>
-  {{ vm.results | length }} results found.
-  <ul>
+  <b>{{vm.search_query}}</b> yieldeth {{ vm.results | length }} results.<br><br>
+  <table border=1>
+    <tr>
+      <td>Title</td>
+      <td>Line</td>
+      <td>Position</td>
+    </tr>
   {% for result in vm.results %}
-    <li>{{ result[0] }} line {{ result[1] }} position {{ result[3] }}</li>
+    <tr>
+      <td>{{ result[0] }}</td>
+      <td>{{ result[1] }}</td>
+      <td>{{ result[3] }}</td>
+    </tr>
   {% endfor %}
-  </ul>
+  </table>
 
 </body>
 

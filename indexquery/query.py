@@ -31,7 +31,7 @@ class CdnwParser(SearchQueryParser):
 
     def GetWord(self, word):
         if (self._index.has_key(word)):
-            return set([tuple(each[:-1]) for each in self._index[word]])
+            return set([tuple(each) for each in self._index[word]])
         else:
             return set()
 
@@ -64,10 +64,10 @@ class CdnwParser(SearchQueryParser):
 
 script_dir = os.path.dirname(__file__)
 
-with open(os.path.join(script_dir,'../stop-words-and-index/inverted_index.json')) as inverted_index_file:
+with open(os.path.join(script_dir,'..','stop-words-and-index','inverted_index.json')) as inverted_index_file:
     inverted_index = json.load(inverted_index_file)
 
-with open(os.path.join(script_dir,'../stop-words-and-index/stop-words.json')) as stop_words_file:
+with open(os.path.join(script_dir,'..','stop-words-and-index','stop-words.json')) as stop_words_file:
     stop_words = json.load(stop_words_file)
 
 parser = CdnwParser(inverted_index)
@@ -86,7 +86,7 @@ def query_execute(query_str):
                     results,
                     key=lambda x: (x[0], int(x[1])) ):
         print(entry[0] + ' line ' + entry[1] + ' (' + entry[2] + ')'
-                + ' position ' )
+                + ' position ' + entry[3])
 
 
 

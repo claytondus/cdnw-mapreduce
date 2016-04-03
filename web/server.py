@@ -11,6 +11,7 @@ def search():
     if request.args.has_key('search'):
         search_query = request.args.get('search','')
         if search_query != '':
+            vm['search_query'] = search_query
             vm['results'] = sorted(QueryParser.Parse(search_query.lower()),
                             key=lambda x: (x[0], int(x[1])) )
     return render_template('index.html', vm=vm)
