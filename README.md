@@ -1,35 +1,34 @@
 Programming Assignment 2: MapReduce
-Clayton Davis, Nathan Wilder
 ===================================
+Clayton Davis, Nathan Wilder
+----------------------------
 
-============
 Requirements
-============
+------------
 This project requires Python 2.7+ and the pyparsing package:
 
 sudo pip install pyparsing
 
 
-==================
+
 Part 1: Stop words
-==================
+------------------
 
 
-======================
 Part 2: Inverted index
-======================
+----------------------
 
 
-=============
+
 Part 3: Query
-=============
+-------------
 After generating the inverted index, the query program is ready for use.
 This program accepts one or more word arguments (separated by spaces) and
 returns the location of each occurrence, sorted by title, line number, and
 starting position on the line.
 
 To run, change to the "simplequery" directory and enter:
-./simplequery.py <term1> <term2> ...
+`./simplequery.py <term1> <term2> ...`
 
 Terms are associated with logical OR; any index entry matching any search term
 will be returned.  Results are not de-duplicated.
@@ -43,9 +42,9 @@ position, and then printed to the console.
 If a word does not exist in the index, no entries are returned, and processing
 continues until all search words are retrieved from the index.
 
-==================
+
 Part 4: Web Portal
-==================
+------------------
 The web portal is implemented as a Flask application which loads a Python module
 containing a query parser (CdnwParser).  The parser is an extension of a class
 provided from the PyParsing project, which compiles Boolean search expressions
@@ -58,7 +57,7 @@ set() to represent documents containing the search terms.  Our result entries
 are tuples, and each is unique, preventing the query parser from correctly
 
 To run the web portal:
-./web/server.py
+`./web/server.py`
 
 The web server will start and display a URL where the application can be locally
 accessed.  No support is provided for remote access.  
@@ -67,7 +66,7 @@ The default page displays an input form control, where a Boolean search can be
 entered.  After selecting the "Enquire" button, the results are printed in a
 table after the form.  An important difference between the simplequery.py syntax
 and the portal's syntax is the implicit operator between adjacent search terms.
-Simplequery.py has an implicit operator of OR, while the web portal uses AND.
+simplequery.py has an implicit operator of OR, while the web portal uses AND.
 
 The Flask application consists of a single route, search(), mapped to "/".
 When the application is first loaded, no query string is present, and only the
