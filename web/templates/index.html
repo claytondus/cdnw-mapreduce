@@ -1,0 +1,29 @@
+<!doctype html>
+<html>
+
+<head>
+  <title>ShakesPortal</title>
+</head>
+
+<body>
+
+  <h1>ShakesPortal</h1>
+
+  <form>
+    <label>What seekest thou, noble reader?<br>
+      <input type="text" name="search" size="20">
+    </label>
+    <input type="submit" value="Enquire">
+  </form>
+
+  <br>
+  {{ vm.results | length }} results found.
+  <ul>
+  {% for result in vm.results %}
+    <li>{{ result[0] }} line {{ result[1] }} position {{ result[3] }}</li>
+  {% endfor %}
+  </ul>
+
+</body>
+
+</html>

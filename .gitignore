@@ -62,4 +62,4 @@ target/
 .ipynb_checkpoints
 stop-words-and-index/pa2
 inverted_index.json
-stop-words.txt
+stop-words.json
