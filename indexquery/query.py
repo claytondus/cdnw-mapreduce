@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # COSC 560 Software Systems
 # Assignment 2 - MapReduce
-# Part 3: Query
+# Part 4: SearchEngine
 # Clayton Davis <cdavi151@vols.utk.edu>
 
 from searchparser import SearchQueryParser

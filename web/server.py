@@ -1,4 +1,8 @@
-#!/usr/bin/env Python
+#!/usr/bin/env python
+# COSC 560 Software Systems
+# Assignment 2 - MapReduce
+# Part 4: SearchEngine
+# Clayton Davis <cdavi151@vols.utk.edu>
 
 from flask import Flask, request, render_template
 app = Flask(__name__)
@@ -12,8 +16,9 @@ def search():
         search_query = request.args.get('search','')
         if search_query != '':
             vm['search_query'] = search_query
+            #Sort by title and line number
             vm['results'] = sorted(QueryParser.Parse(search_query.lower()),
-                            key=lambda x: (x[0], int(x[1])) )
+                            key=lambda x: (x[0], int(x[1])))
     return render_template('index.html', vm=vm)
 
 
