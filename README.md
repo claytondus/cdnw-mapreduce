@@ -85,3 +85,7 @@ and saved to a view-model dictionary which can be passed to the Jinja2 template
 engine.  The template engine renders the results by looping over the 'results'
 set and generating table rows for each result.  A result count is prefixed to
 the table by calling the 'length' filter in the Jinja2 engine.
+
+Results  
+------------------
+The PA2Results.pdf file includes screenshots of example search results.  The generated JSON from parts 1 and 2 are included in the 'stop-words-and-index' folder with the names 'stop-words.json' and 'inverted_index.json'.
