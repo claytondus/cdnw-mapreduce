@@ -13,12 +13,19 @@ sudo pip install pyparsing
 
 Part 1: Stop words
 ------------------
+Generation of the stops words is a MapReduce process within this assignment. In line with the assignment guidelines, a generic stop-words list from the internet is not used. Instead a stop word list is built specific to the documents that are being indexed. The initial processing prior to any map functions is to create HDFS folders for the assignment and copy over the documents to be indexed. For this assignment we used pg100.txt which is the concatenated volume of all of shakespeare's works.  Extraction of titles and indvidual works are dependent on the formatting used in the document and the scripts would need to be slightly adjusted to work with other formats including the individual shakespeare files from Gutenberg (even these individual files come in numerous text formats). 
 
+Once the input data is in HDFS, the first MapReduce set of functions performs a word count per document (individual work of shakespeare found in the complete works file). This list is then merged and counted in the second MapReduce set of functions (the reduce is actually the same as the first set here) in order to provide a count of the number of documents a word appears in. In the final stop-words MapReduce set of functions, if the word appears in about 90% of the documents (34 or greater out of 38), then it is added to the stop-word list. The resulting stop-word list is of course very specific to the works being indexed. For example, the word 'king' is included when shakespeare's works are indexed, but likely would not be included if a broader set of works were indexed. In this way the stop-words list helps fine-tune the search index more so than a generic stop-word list built against all English language trends in general.
 
 Part 2: Inverted index
 ----------------------
+Once the stop-words list has been generated (as stop-words.json), its values are used to limit the indexing of the original input data via a final set of MapReduce functions (mapper4.py and reducer4.py).  These functions build an inverted index for the source material, filtering out stop words in the mapper function and joining multiple occurances of a word together in a JSON array in reducer.  The final index stores the title, line, and line position of each word in an inverted index that is formatted in JSON.
 
-
+Both part 1 and part 2 can be run by use of the included shell script, to run first change to the 'stop-words-and-index' folder and then enter:
+`./stop-words-and-index.sh`
+This shell script will also prep the HDFS folders needed and has been pre-configured for the hadoop-streaming jar location on Azure's HDInsight. If running on another system, edit the first few lines of the script where the relative HDFS path is set and where the streaming jar's location is set. Also, note that some HDFS systems may require issuing the command:
+`hadoop fs -mkdir -p /user/[current-username]`
+if this command has not previously been issued or the resulting directory does not already exist (many Hadoop installs create this HDFS directory by default). If needed this command can be issued prior to running the shell script.
 
 Part 3: Query
 -------------
