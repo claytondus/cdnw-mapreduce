@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-import sys, re, string, json
+import sys, re, string, json, os
 
 
 def add_line_to_index(this_line):
@@ -9,7 +9,7 @@ def add_line_to_index(this_line):
         position, word = match.start(), match.group()
         word = word.strip()
         if word != "" and word not in stop_words:
-            result = [word, title + tuple_delimiter + str(line_count) + '","' + str(real_line) + '","' + str(position) ]
+            result = [word, file_name + title + tuple_delimiter + str(line_count) + '","' + str(real_line) + '","' + str(position) ]
             print("\t".join(result))
 
 
@@ -35,9 +35,27 @@ last_line2 = ""
 title = ""
 line_count = 0
 real_line = 0
+file_name = ""
+
+def fix_filename(file_name):
+    fname = file_name
+    if('/' in fname):
+        parts = fname.split('/')
+        fname = parts[-1:][0]
+    return fname
 
 for line in sys.stdin:
     line = line.strip()
+    if(file_name == ""):
+        file_name = fix_filename(os.environ['mapreduce_map_input_file'])
+    elif(file_name != fix_filename(os.environ['mapreduce_map_input_file'])):
+        file_name = fix_filename(os.environ['mapreduce_map_input_file'])
+        title = ""
+        skip_block = False
+        finished = False
+        line_count = 0
+        real_line = 0
+
     line_count += 1
     real_line += 1
     if(line!=""):
@@ -48,13 +66,13 @@ for line in sys.stdin:
                 finished = True
             else:
                 if(line[:len(doc_start)]==doc_start):
-                    title = last_line
+                    title = "-" + last_line
                     year = last_line2
                     add_line_to_index(year)
                     add_line_to_index(title)
                     line_count = 5
                 else:
-                    if(title!=""):
+                    if(title!="" or file_name!='pg100.txt'):
                         add_line_to_index(line)
 
                 last_line2 = last_line

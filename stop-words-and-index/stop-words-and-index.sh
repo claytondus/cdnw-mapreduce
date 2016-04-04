@@ -7,7 +7,7 @@ export HDFS_PATH=/user/$USER
 hadoop fs -mkdir $HDFS_PATH/pa2
 hadoop fs -mkdir $HDFS_PATH/pa2/shake
 hadoop fs -rm $HDFS_PATH/pa2/shake/*
-hadoop fs -put ../shake/pg100.txt $HDFS_PATH/pa2/shake/
+hadoop fs -put ../shake/*.txt $HDFS_PATH/pa2/shake/
 
 hadoop fs -rm -R $HDFS_PATH/pa2/wc/
 hadoop jar $HADOOP_STREAMING -files mapper.py,reducer.py -mapper mapper.py -reducer reducer.py -input $HDFS_PATH/pa2/shake/ -output $HDFS_PATH/pa2/wc
